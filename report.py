@@ -4,6 +4,7 @@ import numpy as np
 from requests.auth import HTTPBasicAuth
 import sys
 import os
+from itertools import zip_longest
 
 
 class Api:
@@ -90,17 +91,18 @@ class Report:
         projects.set_index("key", inplace=True)
         project_keys = projects.index.tolist()
 
-        if len(project_keys) > 50:
-            print("Querying more than 50 projects at once is not support at the moment. Try using project tags.")
-            exit(-1)
-
-        measures = self.get_measures(project_keys)
-
         for metric in self.metrics:
             projects[metric] = np.nan
 
-        for measure in measures:
-            projects.loc[measure["component"], measure["metric"]] = measure["value"]
+        # api does not accept more than 50 projects at once
+        # so query in 50 item chunks
+        for subset in Report.grouper(project_keys, 50):
+            filtered_subset = list(filter(None, subset))
+
+            measures = self.get_measures(filtered_subset)
+
+            for measure in measures:
+                projects.loc[measure["component"], measure["metric"]] = measure["value"]
 
         return projects
 
@@ -114,6 +116,11 @@ class Report:
 
         return projects
 
+    @staticmethod
+    # borrowed from stackoverflow
+    def grouper(iterable, n, fillvalue=None):
+        args = [iter(iterable)] * n
+        return zip_longest(*args, fillvalue=fillvalue)
 
 def usage():
     print("Usage:\n{} <report filename> [<project tag>]".format(__file__))

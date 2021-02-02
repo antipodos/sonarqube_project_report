@@ -8,7 +8,7 @@ Usage
 
 `python report.py <filename> [<tagname>]`
 
-Queries all projects available. Cannot report more than 50 at once (at the moment). Filter using `tagname`(s) if you have more than 50.
+Queries all projects available. Filter using `tagname`(s) if you just need a limited view.
 Generates cvs report at `filename` location - overwrites existing files.
 
 Installation
@@ -24,4 +24,5 @@ Installation
 How to read the report
 -
 
-Every line represents a project. Columns show the project metrics using the keys used and explained here: https://docs.sonarqube.org/latest/user-guide/metric-definitions/
+Every line represents a project. Columns show the project metrics using the keys explained here: https://docs.sonarqube.org/latest/user-guide/metric-definitions/ \
+Character ranges A to F are transformed to numeric values (A = 1, B = 2, ...).
