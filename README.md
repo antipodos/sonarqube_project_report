@@ -9,7 +9,7 @@ Usage
 `python report.py <filename> [<tagname>]`
 
 Queries all projects available. Filter using `tagname`(s) if you just need a limited view.
-Generates cvs report at `filename` location - overwrites existing files.
+Generates csv report at `filename` location - overwrites existing files.
 
 Installation
 - 
