@@ -1,7 +1,7 @@
 Sonarqube project report
 =
 
-Generates a cvs file reflecting sonarqube's project dashboard.
+Generates a csv file reflecting sonarqube's project dashboard.
 
 Usage
 -
