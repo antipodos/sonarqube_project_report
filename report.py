@@ -122,17 +122,16 @@ class Report:
         args = [iter(iterable)] * n
         return zip_longest(*args, fillvalue=fillvalue)
 
-def usage():
-    print("Usage:\n{} <report filename> [<project tag>]".format(__file__))
 
+def main():
+    from argparse import ArgumentParser
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        usage()
-        exit(-1)
-
-    report_file = sys.argv[1]
-    tag = sys.argv[2] if len(sys.argv) > 2 else None
+    parser = ArgumentParser()
+    parser.add_argument("report_filename", type=str, help="Output report file name.")
+    parser.add_argument("project_tag", nargs="?", type=str, help="Project tag.")
+    args = parser.parse_args()
+    report_file = args.report_filename
+    tag = args.project_tag
 
     api_base = os.getenv("SONARQUBE_API_BASE")
     user_token = os.getenv("SONARQUBE_API_USERTOKEN")
@@ -144,3 +143,7 @@ if __name__ == "__main__":
 
     df.to_csv(report_file)
     print("Report generated at: {}".format(report_file))
+
+
+if __name__ == "__main__":
+    main()
