@@ -2,7 +2,6 @@ import requests
 import pandas as pd
 import numpy as np
 from requests.auth import HTTPBasicAuth
-import sys
 import os
 from itertools import zip_longest
 
